@@ -4,6 +4,8 @@ import numpy as np
 import os
 import shutil
 import random
+import argparse
+from pathlib import Path
 from functools import cmp_to_key
 from collections import deque
 import matplotlib.pyplot as plt
@@ -160,10 +162,27 @@ if __name__ == '__main__':
     """
     Example of how to run this script directly for testing purposes.
     """
+    parser = argparse.ArgumentParser(
+        description="Extract tabular data from preprocessed image.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("--input_path", type=str, 
+                        # required=True, 
+                        help="Path to the input PNG image.",
+                        nargs='?', const=1, default='notebooks/data/raw/image1.png')
+    parser.add_argument("--output_path", type=str, 
+                        # required=True, 
+                        help="Path to save the processed PNG image.",
+                        nargs='?', const=1, default='notebooks/data/detection_steps_for_image1')
+    args = parser.parse_args()
+    # print(args.input_path)
+    INPUT_IMAGE_PATH = Path(args.input_path)
+    OUTPUT_FOLDER = Path(args.output_path)
+
     print("--- Running Table Extractor in Test Mode ---")
 
-    INPUT_IMAGE_PATH = 'data/raw/image1.png'
-    OUTPUT_FOLDER = 'data/detection_steps_for_image1'
+    # INPUT_IMAGE_PATH = 'data/raw/image1.png'
+    # OUTPUT_FOLDER = 'data/detection_steps_for_image1'
 
     if not os.path.exists(INPUT_IMAGE_PATH):
         print(f"\nERROR: Test image not found at '{INPUT_IMAGE_PATH}'")
